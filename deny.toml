@@ -1,0 +1,42 @@
+# cargo-deny configuration.
+# Main purpose: enforce "ICU dependency 0" (ICU4C, ICU4X and every crate from
+# the ICU4X project, ICU bindings). scripts/check-no-icu.sh adds a prefix
+# check for crate names not listed here.
+
+[graph]
+all-features = true
+
+[licenses]
+allow = [
+    "Apache-2.0",
+    "MIT",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "Unicode-3.0",
+    "Unicode-DFS-2016",
+]
+confidence-threshold = 0.9
+unused-allowed-license = "allow"
+
+[bans]
+multiple-versions = "warn"
+wildcards = "allow"
+deny = [
+    # ICU4X
+    { name = "icu" }, { name = "icu_provider" }, { name = "icu_locale" },
+    { name = "icu_locale_core" }, { name = "icu_locid" }, { name = "icu_normalizer" },
+    { name = "icu_properties" }, { name = "icu_collections" }, { name = "icu_datetime" },
+    { name = "icu_decimal" }, { name = "icu_plurals" }, { name = "icu_calendar" },
+    { name = "icu_casemap" },
+    # General-purpose crates from the ICU4X project
+    { name = "zerovec" }, { name = "zerovec-derive" }, { name = "yoke" },
+    { name = "yoke-derive" }, { name = "zerofrom" }, { name = "zerofrom-derive" },
+    { name = "writeable" }, { name = "tinystr" }, { name = "litemap" },
+    { name = "databake" }, { name = "zerotrie" }, { name = "potential_utf" },
+    # ICU4C bindings
+    { name = "rust_icu_sys" }, { name = "rust_icu_common" },
+]
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

@@ -1,0 +1,12 @@
+[package]
+name = "ilibx-core"
+description = "ilibx core logic (no_std + alloc). Not for direct use by apps."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+# Keep this empty unless really needed. Every new dependency must pass
+# `cargo deny check` and scripts/check-no-icu.sh.

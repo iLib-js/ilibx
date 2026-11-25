@@ -1,0 +1,13 @@
+[package]
+name = "ilibx-rust"
+description = "Rust bindings for Rust apps: calls the shared libilibx.so through its C ABI."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+# IMPORTANT: no dependency on ilibx-core or ilibx-ffi.
+# Depending on them would copy the core into every app and break sharing
+# (one libilibx.so per device, same result for every app).
+[dependencies]

@@ -1,0 +1,16 @@
+[package]
+name = "ilibx-ffi"
+description = "C ABI entry point of ilibx. Builds libilibx.so."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+build = "build.rs"
+
+[lib]
+name = "ilibx"              # output file: libilibx.so
+crate-type = ["cdylib"]
+
+[dependencies]
+ilibx-core = { path = "../ilibx-core" }

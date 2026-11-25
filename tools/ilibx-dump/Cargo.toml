@@ -1,0 +1,11 @@
+[package]
+name = "ilibx-dump"
+description = "Debug tool: print the contents of a locale.bin."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+ilibx-core = { path = "../../crates/ilibx-core" }

@@ -1,0 +1,11 @@
+[package]
+name = "datagen"
+description = "Build-time tool: flutter_ilib assembled locale JSON -> locale.bin. Runs on the build machine only."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+ilibx-core = { path = "../../crates/ilibx-core" }
