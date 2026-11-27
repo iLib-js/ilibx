@@ -1,0 +1,22 @@
+name: docs-sync
+
+# The Korean LLD is the authoring source and the English LLD is translated
+# from it. Fail if their structure differs; warn if the English one is behind.
+on:
+  pull_request:
+    paths:
+      - "docs/**.md"
+      - "tools/check_doc_sync.py"
+  push:
+    branches: [develop, main]
+    paths:
+      - "docs/**.md"
+      - "tools/check_doc_sync.py"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare LLD_ilibx.md with LLD_ilibx.ko.md
+        run: python3 tools/check_doc_sync.py docs/LLD_ilibx.md docs/LLD_ilibx.ko.md

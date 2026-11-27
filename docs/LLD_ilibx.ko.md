@@ -1,5 +1,7 @@
 # (LLD) ilibx
 
+> **영어판**: [LLD_ilibx.md](LLD_ilibx.md). 이 한국어판이 작성 원본이며, 영어판은 이 문서를 번역해 만든다. 내용을 고칠 때는 이 문서를 먼저 고친다.
+
 | 날짜 | 변경 내용 |
 |---|---|
 | 2026-11-25 | 초안. 개요(§1~§4)와 구조(§5)를 기존 설계 문서에서 옮겨 채움. 측정값·검증·미정 항목은 TBD. 로케일 데이터 원본 형태(flutter_ilib / iLib JS)는 미정으로 표시 |
@@ -8,8 +10,9 @@
 
 > **이 초안에 대해**: [LLD_flutter_ilib](https://github.com/iLib-js/flutter_ilib/blob/develop/doc/design/LLD_flutter_ilib.md)과 같은 형식을 따른다. ilibx는 아직 구현 전이라 측정값, 테스트 링크, 일부 설계 항목은 **TBD**로 둔다.
 >
-> **로케일 데이터 처리 방식은 미정이다(TBD, [§6 #17](#6-미결-사항))**. 원본을 flutter_ilib 형태(로케일별 파일 하나에 모든 데이터 종류)로 쓸지, iLib JS 형태(로케일 디렉터리 아래 데이터 종류별 파일)로 쓸지 검토와 추가 조사가 필요하다. 데이터 원본, 섹션 선택, 조회 규칙, 생성 단계에 관한 서술은 flutter_ilib 형태를 가정한 안이며, 해당 부분에 따로 표시했다.
+> **로케일 데이터 처리 방식은 미정이다(TBD, [§6 #17](#open-issues))**. 원본을 flutter_ilib 형태(로케일별 파일 하나에 모든 데이터 종류)로 쓸지, iLib JS 형태(로케일 디렉터리 아래 데이터 종류별 파일)로 쓸지 검토와 추가 조사가 필요하다. 데이터 원본, 섹션 선택, 조회 규칙, 생성 단계에 관한 서술은 flutter_ilib 형태를 가정한 안이며, 해당 부분에 따로 표시했다.
 
+<a id="document-descriptions"></a>
 ## 1. 문서 설명 (Document Descriptions)
 
 ### 1.1 문서의 목적
@@ -73,6 +76,7 @@ flutter_ilib LLD 구성에 §5.4(인터페이스 명세), §5.5(데이터 형식
 | 제외 목록 | 생성기가 `locale.bin`에서 뺄 데이터 섹션 목록. 옵션이며, 기본은 모든 섹션을 넣는다 |
 | PSS | Proportional Set Size. 공유 메모리를 공유 프로세스 수로 나눠 계산한 메모리 사용량 |
 
+<a id="project-overview"></a>
 ## 2. 프로젝트 개요 (Project Overview)
 
 ilibx는 다음 여섯 조건을 모두 만족하는 Native i18n 라이브러리를 목표로 한다.
@@ -86,6 +90,7 @@ ilibx는 다음 여섯 조건을 모두 만족하는 Native i18n 라이브러리
 
 이 조건에서 나온 구성은 **공용 `.so` 하나 + C ABI + 공용 데이터 파일 한 벌 + 빌드 때 커스텀을 합친 데이터**이고, 구현 언어는 Rust다(11-19 결정).
 
+<a id="architectural-drivers"></a>
 ## 3. 아키텍처 동인 (Architectural Drivers)
 
 ### 3.1 제약 사항
@@ -183,6 +188,7 @@ flutter_ilib LLD의 FR ID(FR1~FR13)를 그대로 써서 두 라이브러리의 �
 
 TBD.
 
+<a id="system-context"></a>
 ## 4. 시스템 컨텍스트 (System Context)
 
 ilibx는 빌드 시점과 기기 런타임 두 영역에 걸쳐 있다. 빌드 시점에는 로케일 데이터 원본(형태 TBD, §6 #17)을 `locale.bin`으로 바꾸고, 기기에서는 여러 언어의 앱이 같은 `libilibx.so`를 C ABI로 부른다.
@@ -241,6 +247,7 @@ graph LR
 | `libilibx.so` → libc | 시스템 시간대 조회 |
 | 데이터 원본 → datagen → `locale.bin` | 빌드 때 데이터 선택, 중복 제거, 인코딩. 기기에서는 데이터만 따로 갱신하지 않는다 |
 
+<a id="architecture-design"></a>
 ## 5. 아키텍처 설계 (Architecture Design)
 
 ### 5.1 정적 관점 (Static Perspectives)
@@ -349,7 +356,8 @@ TBD. 아직 구현하지 않아 비워 둔다. 지금까지 검토한 C 함수 �
 
 TBD. 아직 구현하지 않아 비워 둔다. 구현하면서 채운다.
 
-## 6. 미결 사항
+<a id="open-issues"></a>
+## 6. 미결 사항 (Open Issues)
 
 | # | 내용 | 관련 절 |
 |---|---|---|
@@ -374,7 +382,8 @@ TBD. 아직 구현하지 않아 비워 둔다. 구현하면서 채운다.
 | 19 | Rust 공유 구성 PoC: cdylib + ilibx-rust + 앱 2개로 NEEDED·심볼·매핑 확인 | §5.3, TC03 |
 | 20 | ilibx 이름 중복(npm·crates.io·사내 저장소)과 C 심볼 접두어 `ilibx_` 충돌 확인 | §5.4 |
 
-## 7. 참고 자료 (Reference)
+<a id="references"></a>
+## 7. 참고 자료 (References)
 
 | 자료 | 링크 |
 |---|---|
